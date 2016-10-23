@@ -1,30 +1,57 @@
 #header {
   text-align: center;
-  font-family: 'Fredoka One'; }
+  font-size: 1.4em; }
+.author-you {
+  color: #aec6cf; }
+
+.author-bot {
+  color: #ffb347; }
+
+.sent-from-you {
+  text-align: left; }
+
+.sent-from-bot {
+  text-align: right; }
 #chatbox {
   width: 100%;
   height: 400px;
   background: white;
   padding: 10px;
+  margin: 0;
   border: none;
-  border-radius: 10px; }
+  border-radius: 10px;
+  overflow-y: scroll; }
 #chat-input {
   margin-top: 20px;
-  width: 100%; }
+  width: 100%;
+  font-size: 1.1em;
+  font-family: 'Fredoka One'; }
   #chat-input input {
-    border-radius: 5px;
-    width: 90%;
+    display: inline-block;
+    border-radius: 6px;
+    width: 84%;
+    height: 30px;
     border-style: solid;
-    border: none; }
+    border: none;
+    padding: 0 10px 0 10px;
+    font-family: 'Fredoka One';
+    font-size: 1em; }
   #chat-input button {
-    width: 9%;
+    display: inline-block;
+    margin-left: 2.1%;
+    height: 30px;
+    width: 11%;
     background: #a85100;
     border: none;
-    border-radius: 5px; }
+    border-radius: 6px;
+    font-family: 'Fredoka One';
+    font-size: 1em;
+    color: #ffb347; }
 body {
   margin: 0;
   padding: 0;
-  background: #ffb347; }
+  background: #ffb347;
+  font-family: 'Fredoka One'; }
 
 #main {
   max-width: 700px;

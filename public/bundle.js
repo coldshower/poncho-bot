@@ -21453,11 +21453,11 @@
 	
 	var _Chat2 = _interopRequireDefault(_Chat);
 	
-	var _initialState = __webpack_require__(180);
+	var _initialState = __webpack_require__(181);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
-	__webpack_require__(181);
+	__webpack_require__(182);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21482,6 +21482,24 @@
 	  }
 	
 	  _createClass(Main, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      window.addEventListener('keypress', function (e) {
+	        if (e.which === 13) {
+	          _this2.submitMessage('You', _this2.state.currentInput);
+	        }
+	      });
+	
+	      setTimeout(function () {
+	        _this2.submitMessage('Bot', 'Hi there!');
+	      }, 3000);
+	      setTimeout(function () {
+	        _this2.submitMessage('Bot', 'Name an artist you like.');
+	      }, 5000);
+	    }
+	  }, {
 	    key: 'updateCurrentInput',
 	    value: function updateCurrentInput(e) {
 	      this.setState({
@@ -21491,7 +21509,10 @@
 	  }, {
 	    key: 'submitMessage',
 	    value: function submitMessage(author, content) {
-	      var history = this.state.history;
+	      var _state = this.state;
+	      var history = _state.history;
+	      var iterator = _state.iterator;
+	      var currentInput = _state.currentInput;
 	
 	      var newMessage = {
 	        author: author,
@@ -21499,16 +21520,25 @@
 	      };
 	      this.setState({
 	        history: history.concat([newMessage]),
-	        currentInput: ''
+	        currentInput: author === 'You' ? '' : currentInput,
+	        iterator: iterator + 1
 	      });
+	      this.scrollToBottom();
+	    }
+	  }, {
+	    key: 'scrollToBottom',
+	    value: function scrollToBottom() {
+	      var chatBox = document.getElementById('chatbox');
+	      chatBox.scrollTop = chatBox.scrollHeight;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _state = this.state;
-	      var intro = _state.intro;
-	      var history = _state.history;
-	      var currentInput = _state.currentInput;
+	      var _state2 = this.state;
+	      var intro = _state2.intro;
+	      var history = _state2.history;
+	      var currentInput = _state2.currentInput;
+	      var iterator = _state2.iterator;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -21518,7 +21548,8 @@
 	          history: history,
 	          currentInput: currentInput,
 	          submitMessage: this.submitMessage,
-	          updateCurrentInput: this.updateCurrentInput
+	          updateCurrentInput: this.updateCurrentInput,
+	          iterator: iterator
 	        })
 	      );
 	    }
@@ -21585,7 +21616,7 @@
 	
 	var _ChatBox2 = _interopRequireDefault(_ChatBox);
 	
-	var _ChatInput = __webpack_require__(178);
+	var _ChatInput = __webpack_require__(179);
 	
 	var _ChatInput2 = _interopRequireDefault(_ChatInput);
 	
@@ -21596,11 +21627,12 @@
 	  var submitMessage = _ref.submitMessage;
 	  var updateCurrentInput = _ref.updateCurrentInput;
 	  var currentInput = _ref.currentInput;
+	  var iterator = _ref.iterator;
 	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_ChatBox2.default, { history: history }),
+	    _react2.default.createElement(_ChatBox2.default, { history: history, iterator: iterator }),
 	    _react2.default.createElement(_ChatInput2.default, { currentInput: currentInput, submitMessage: submitMessage, updateCurrentInput: updateCurrentInput })
 	  );
 	};
@@ -21623,12 +21655,13 @@
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	__webpack_require__(182);
+	__webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function (_ref) {
 	  var history = _ref.history;
+	  var iterator = _ref.iterator;
 	
 	  return _react2.default.createElement(
 	    'div',
@@ -21639,8 +21672,9 @@
 	      history.map(function (message) {
 	        var author = message.author;
 	        var content = message.content;
+	        var iterator = message.iterator;
 	
-	        return _react2.default.createElement(_Message2.default, { author: author, content: content });
+	        return _react2.default.createElement(_Message2.default, { key: iterator, author: author, content: content });
 	      })
 	    )
 	  );
@@ -21661,6 +21695,8 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(183);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21691,15 +21727,16 @@
 	      var author = _props.author;
 	      var content = _props.content;
 	
+	      var authorStyle = this.authorStyler(author);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'p',
-	          null,
+	          { className: 'sent-from-' + authorStyle },
 	          _react2.default.createElement(
 	            'span',
-	            { className: 'author-' + this.authorStyler({ author: author }) },
+	            { className: 'author-' + authorStyle },
 	            author,
 	            ': '
 	          ),
@@ -21720,6 +21757,12 @@
 
 /***/ },
 /* 178 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21732,7 +21775,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(179);
+	__webpack_require__(180);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21756,13 +21799,13 @@
 	};
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21773,17 +21816,18 @@
 	exports.default = {
 	  intro: 'Hello, Poncho! Make yourself at home.',
 	  history: [],
-	  currentInput: ''
+	  currentInput: '',
+	  iterator: 1
 	};
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

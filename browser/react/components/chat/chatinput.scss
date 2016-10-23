@@ -1,18 +1,31 @@
 #chat-input {
 	margin-top: 20px;
 	width: 100%;
+	font-size: 1.1em;
+	font-family: 'Fredoka One';
 
 	input {
-		border-radius: 5px;
-		width: 90%;
+		display: inline-block;
+		border-radius: 6px;
+		width: 84%;
+		height: 30px;
 		border-style: solid;
 		border: none;
+		padding: 0 10px 0 10px;
+		font-family: 'Fredoka One';
+		font-size: 1em;
 	}
 
 	button {
-		width: 9%;
+		display: inline-block;
+		margin-left: 2.1%; 
+		height: 30px;
+		width: 11%;
 		background: #a85100;
 		border: none;
-		border-radius: 5px;
+		border-radius: 6px;
+		font-family: 'Fredoka One';
+		font-size: 1em;
+		color: #ffb347;
 	}
 }

@@ -12,6 +12,21 @@ export default class Main extends Component {
     this.submitMessage = this.submitMessage.bind(this);
   }
 
+  componentDidMount () {    
+    window.addEventListener('keypress', e => {
+      if (e.which === 13) {
+        this.submitMessage('You', this.state.currentInput);
+      }
+    });
+
+    setTimeout(() => {
+      this.submitMessage('Bot', 'Hi there!');
+    }, 3000);
+    setTimeout(() => {
+      this.submitMessage('Bot', 'Name an artist you like.');
+    }, 5000);
+  }
+
   updateCurrentInput (e) {
     this.setState({
       currentInput: e.target.value
@@ -19,19 +34,26 @@ export default class Main extends Component {
   }
 
   submitMessage (author, content) {
-    const { history } = this.state;
+    const { history, iterator, currentInput } = this.state;
     const newMessage = {
       author,
       content
     };
     this.setState({
       history: history.concat([newMessage]),
-      currentInput: ''
+      currentInput: author === 'You' ? '' : currentInput,
+      iterator: iterator + 1
     });
+    this.scrollToBottom();
+  }
+
+  scrollToBottom () {
+    const chatBox = document.getElementById('chatbox');
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
   render () {
-    const { intro, history, currentInput } = this.state;
+    const { intro, history, currentInput, iterator } = this.state;
     return (
       <div id="main">
         <Header intro={ intro } />
@@ -40,6 +62,7 @@ export default class Main extends Component {
           currentInput={ currentInput }
           submitMessage={ this.submitMessage }
           updateCurrentInput={ this.updateCurrentInput }
+          iterator={ iterator }
         />
       </div>
     );

@@ -21457,6 +21457,10 @@
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
+	var _utils = __webpack_require__(184);
+	
+	var _constants = __webpack_require__(185);
+	
 	__webpack_require__(182);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -21497,7 +21501,17 @@
 	      }, 3000);
 	      setTimeout(function () {
 	        _this2.submitMessage('Bot', 'Name an artist you like.');
+	        _this2.toggleWaiting();
 	      }, 5000);
+	    }
+	  }, {
+	    key: 'toggleWaiting',
+	    value: function toggleWaiting() {
+	      var waiting = this.state.waiting;
+	
+	      this.setState({
+	        waiting: !waiting
+	      });
 	    }
 	  }, {
 	    key: 'updateCurrentInput',
@@ -21513,23 +21527,42 @@
 	      var history = _state.history;
 	      var iterator = _state.iterator;
 	      var currentInput = _state.currentInput;
+	      var waiting = _state.waiting;
 	
 	      var newMessage = {
 	        author: author,
 	        content: content
 	      };
+	
 	      this.setState({
 	        history: history.concat([newMessage]),
 	        currentInput: author === 'You' ? '' : currentInput,
 	        iterator: iterator + 1
 	      });
-	      this.scrollToBottom();
+	      (0, _utils.scrollToBottom)();
+	
+	      if (waiting) {
+	        this.requestYoutube(author, content);
+	      }
 	    }
 	  }, {
-	    key: 'scrollToBottom',
-	    value: function scrollToBottom() {
-	      var chatBox = document.getElementById('chatbox');
-	      chatBox.scrollTop = chatBox.scrollHeight;
+	    key: 'requestYoutube',
+	    value: function requestYoutube(author, content) {
+	      var _this3 = this;
+	
+	      fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=' + content.split(' ').join('') + '&type=video&key=' + _constants.API_KEY).then(function (res) {
+	        return res.json();
+	      }).then(function (video) {
+	        var target = video.items[0];
+	        console.log(target);
+	        _this3.setState({
+	          waiting: false
+	        });
+	        _this3.submitMessage('Bot', 'Let me play ' + target.snippet.title + ' for you.');
+	        _this3.submitMessage('Bot', _react2.default.createElement('iframe', { width: '50%', height: 'auto', src: "https://www.youtube.com/embed/" + target.id.videoId + '?autoplay=1' }));
+	      }).catch(function (e) {
+	        _this3.submitMessage('Bot', "That didn't work. Do you listen to Nickelback or something?");
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -21817,7 +21850,9 @@
 	  intro: 'Hello, Poncho! Make yourself at home.',
 	  history: [],
 	  currentInput: '',
-	  iterator: 1
+	  iterator: 1,
+	  waiting: false,
+	  videoId: ''
 	};
 
 /***/ },
@@ -21831,6 +21866,31 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var scrollToBottom = exports.scrollToBottom = function scrollToBottom() {
+	  var chatBox = document.getElementById('chatbox');
+	  chatBox.scrollTop = chatBox.scrollHeight;
+	};
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var API_KEY = exports.API_KEY = 'AIzaSyCwY-F_rmPILgM6dK-i-tKoZI0Q3tVOUbI';
 
 /***/ }
 /******/ ]);

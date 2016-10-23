@@ -1,0 +1,33 @@
+#header {
+  text-align: center;
+  font-family: 'Fredoka One'; }
+#chatbox {
+  width: 100%;
+  height: 400px;
+  background: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px; }
+#chat-input {
+  margin-top: 20px;
+  width: 100%; }
+  #chat-input input {
+    border-radius: 5px;
+    width: 90%;
+    border-style: solid;
+    border: none; }
+  #chat-input button {
+    width: 9%;
+    background: #a85100;
+    border: none;
+    border-radius: 5px; }
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffb347; }
+
+#main {
+  max-width: 700px;
+  margin: 0 auto; }
+
+/*# sourceMappingURL=style.css.map*/

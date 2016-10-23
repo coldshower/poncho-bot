@@ -21554,7 +21554,6 @@
 	        return res.json();
 	      }).then(function (video) {
 	        var target = video.items[0];
-	        console.log(target);
 	        _this3.setState({
 	          waiting: false
 	        });

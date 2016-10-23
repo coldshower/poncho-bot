@@ -67,9 +67,8 @@ export default class Main extends Component {
     .then(res => res.json())
     .then(video => {
       const target = video.items[0];
-      console.log(target);
       this.setState({
-        waiting: false,
+        waiting: false
       });
       this.submitMessage('Bot', 'Let me play ' + target.snippet.title + ' for you.')
       this.submitMessage('Bot', <iframe width="50%" height="auto" src={ "https://www.youtube.com/embed/" + target.id.videoId + '?autoplay=1'} ></iframe>);
